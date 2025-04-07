@@ -17,10 +17,9 @@
   "scripts": {
     "dev": "vite",
     "rollup": "rollup -c --bundleConfigAsCjs",
-    "build": "rollup -c -w",
-    "build:dev": "tsup src/components/index.ts --format=esm,cjs --dts --out-dir dist",
+    "build": "rollup -c --bundleConfigAsCjs",
     "lint": "eslint .",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run rollup"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
