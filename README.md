@@ -52,3 +52,12 @@ export default tseslint.config({
   },
 })
 ```
+
+important
+
+npm install git+https://github.com/sajidsalu/ui-components.git#ui-library
+
+run the command to install the package from the git repo branch
+
+
+
