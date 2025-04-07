@@ -4,7 +4,7 @@
     "module": "esnext",
     "jsx": "react",
     "sourceMap": true,
-    "outDir": "dist",
+    "outDir": "./dist",
     "strict": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
@@ -14,7 +14,7 @@
     "declaration": true,
     "declarationDir": "./dist",
     "importHelpers": true,
-
+    "rootDir": "",
     "noEmit": false,
     "baseUrl": "./src",
     "lib": ["dom", "dom.iterable", "esnext"],

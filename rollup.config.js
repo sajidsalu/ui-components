@@ -3,30 +3,46 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import strip from "@rollup/plugin-strip"; // ✅ Import strip
+import PeerDepsExternalPlugin from "rollup-plugin-peer-deps-external";
+import dts from "rollup-plugin-dts";
+import terser from "@rollup/plugin-terser";
 
-export default {
-  input: "src/components/index.tsx",
-  output: [
-    {
-      file: "dist/index.js",
-      format: "esm",
-      sourcemap: true,
-    },
-    {
-      file: "dist/index.cjs",
-      format: "cjs",
-      sourcemap: true,
-    },
-  ],
-  plugins: [
-    resolve(),
-    commonjs(),
-    typescript(),
-    json(), // ✅ Allows JSON import without "assert"
-    strip({
-      include: ["**/*.js", "**/*.tsx", "**/*.ts"],
-      functions: ["use client"], // Remove 'use client'
-    }),
-  ],
-  external: ["react", "react-dom", "@mui/material"],
-};
+const packageJson = require("./package.json");
+
+export default [
+  {
+    input: "src/index.ts",
+    output: [
+      // {
+      //   file: packageJson.module,
+      //   format: "esm",
+      //   sourcemap: true,
+      //   exports: "named",
+      // },
+      // {
+      //   file: packageJson.main,
+      //   format: "cjs",
+      //   sourcemap: true,
+      //   exports: "named",
+      // },
+      {
+        file: "dist/index.js",
+        format: "esm", // use esm only
+        sourcemap: true,
+      },
+    ],
+    plugins: [
+      PeerDepsExternalPlugin(),
+      resolve(),
+      commonjs(),
+      typescript({ tsconfig: "./tsconfig.json" }),
+      terser(),
+    ],
+    external: ["react", "react-dom", "@mui/material"],
+  },
+  {
+    input: "src/index.ts",
+    output: [{ file: packageJson.types, format: "es" }],
+    plugins: [dts.default()],
+  },
+];
